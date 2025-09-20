@@ -1,0 +1,252 @@
+/* === Periodic Table Overhaul CSS === */
+:root {
+    --bg-color: #f0f2f5;
+    --table-bg: #ffffff;
+    --card-bg: #f8f9fa;
+    --text-color: #333;
+    --text-light: #666;
+    --border-color: #dee2e6;
+    --shadow-color: rgba(0, 0, 0, 0.08);
+    --accent-color: #007bff;
+    --font-main: 'Segoe UI', 'Roboto', 'Helvetica Neue', Arial, sans-serif;
+}
+
+body.dark-mode {
+    --bg-color: #1a1a1a;
+    --table-bg: #2c2c2c;
+    --card-bg: #343a40;
+    --text-color: #f8f9fa;
+    --text-light: #aaa;
+    --border-color: #444;
+    --shadow-color: rgba(0, 0, 0, 0.25);
+}
+
+.pt-legend {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 12px;
+    justify-content: center;
+    margin: 0 auto 25px auto;
+    max-width: 1100px;
+    padding: 15px;
+    background-color: var(--table-bg);
+    border-radius: 16px;
+    box-shadow: 0 4px 20px var(--shadow-color);
+    border: 1px solid var(--border-color);
+}
+
+.legend-item {
+    display: flex;
+    align-items: center;
+    cursor: pointer;
+    padding: 4px 8px;
+    border-radius: 8px;
+    transition: background-color 0.2s;
+}
+.legend-item:hover {
+    background-color: rgba(128, 128, 128, 0.1);
+}
+.legend-color {
+    width: 16px;
+    height: 16px;
+    border: 1px solid rgba(0, 0, 0, 0.2);
+    margin-right: 8px;
+    border-radius: 4px;
+}
+.legend-text {
+    font-size: 12px;
+    font-weight: 500;
+    color: var(--text-light);
+}
+
+#periodic-table-container {
+    max-width: 1400px;
+    margin: 0 auto;
+    padding: 0 15px;
+}
+
+#periodic-table-main, #periodic-table-f-block {
+    display: grid;
+    gap: 6px;
+}
+
+#periodic-table-main {
+    grid-template-columns: repeat(18, minmax(0, 1fr));
+    grid-template-rows: repeat(7, auto);
+}
+
+#periodic-table-f-block {
+    grid-template-columns: repeat(18, minmax(0, 1fr));
+    grid-template-rows: repeat(2, auto);
+    margin-top: 20px;
+    padding: 0 1fr; /* Indent f-block */
+}
+
+.lanthanide-placeholder, .actinide-placeholder {
+    grid-column: 3;
+    background-color: var(--card-bg);
+    border: 1px dashed var(--border-color);
+    border-radius: 8px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 12px;
+    color: var(--text-light);
+    padding: 5px;
+}
+.lanthanide-placeholder { grid-row: 6; }
+.actinide-placeholder { grid-row: 7; }
+
+.element {
+    aspect-ratio: 4 / 5;
+    background-color: var(--card-bg);
+    border-radius: 8px;
+    padding: 6px;
+    text-align: center;
+    cursor: pointer;
+    transition: all 0.25s cubic-bezier(0.25, 0.8, 0.25, 1);
+    border: 1px solid var(--border-color);
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    font-size: clamp(8px, 1.2vw, 12px);
+    overflow: hidden;
+    box-shadow: 0 2px 5px var(--shadow-color);
+}
+
+.element:hover {
+    transform: scale(1.15);
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
+    z-index: 10;
+    border-color: var(--accent-color);
+}
+
+.element.dimmed {
+    opacity: 0.2;
+    pointer-events: none;
+}
+
+.element .number {
+    font-size: 0.7em;
+    color: var(--text-light);
+    position: absolute;
+    top: 4px;
+    left: 5px;
+    font-weight: 600;
+}
+
+.element .symbol {
+    font-size: 1.6em;
+    font-weight: 700;
+    margin: 0;
+    line-height: 1;
+    color: var(--text-color);
+}
+
+.element .name {
+    font-size: 0.75em;
+    line-height: 1.1;
+    word-break: break-word;
+    font-weight: 500;
+    color: var(--text-light);
+}
+
+/* Modern & Accessible Color Palette */
+.alkali-metal { background-color: #ffadad; }
+.alkaline-earth-metal { background-color: #ffd6a5; }
+.lanthanide { background-color: #fdffb6; }
+.actinide { background-color: #caffbf; }
+.transition-metal { background-color: #9bf6ff; }
+.post-transition-metal { background-color: #a0c4ff; }
+.metalloid { background-color: #bdb2ff; }
+.reactive-nonmetal { background-color: #ffc6ff; }
+.noble-gas { background-color: #fffffc; }
+.unknown { background-color: #e9ecef; }
+
+/* === Modal Overhaul === */
+.modal { display: none; position: fixed; z-index: 1001; left: 0; top: 0; width: 100%; height: 100%; background-color: rgba(0,0,0,0.5); backdrop-filter: blur(8px); animation: fade-in 0.3s; }
+.modal-content { background-color: var(--bg-color); margin: 4% auto; width: 90%; max-width: 1000px; border-radius: 20px; box-shadow: 0 10px 40px rgba(0,0,0,0.3); position: relative; animation: slide-up 0.5s cubic-bezier(0.165,0.84,0.44,1); overflow: hidden; border: 1px solid var(--border-color); }
+.modal-body { display: flex; height: 550px; }
+.modal-left { flex: 1; background-color: #000; position: relative; }
+.modal-right { flex: 1; padding: 0; overflow: hidden; display: flex; flex-direction: column; }
+#atom-canvas-container { width: 100%; height: 100%; position: absolute; top: 0; left: 0; }
+.close-button { color: #fff; background-color: rgba(0,0,0,0.5); border-radius: 50%; width: 32px; height: 32px; display: flex; align-items: center; justify-content: center; font-size: 24px; position: absolute; top: 12px; right: 12px; z-index: 1002; transition: all 0.2s; }
+.close-button:hover, .close-button:focus { background-color: #e74c3c; transform: rotate(90deg); }
+
+#atom-controls {
+    padding: 15px 25px;
+    display: flex;
+    justify-content: center;
+    gap: 5px;
+    background-color: var(--card-bg);
+    border-bottom: 1px solid var(--border-color);
+}
+.control-btn {
+    background-color: transparent;
+    color: var(--text-light);
+    border: 1px solid transparent;
+    padding: 8px 16px;
+    border-radius: 8px;
+    cursor: pointer;
+    font-size: 14px;
+    font-weight: 600;
+    transition: all 0.2s ease-in-out;
+}
+.control-btn.active, .control-btn:hover {
+    background-color: var(--accent-color);
+    color: #fff;
+    transform: translateY(0);
+    box-shadow: 0 2px 8px rgba(0, 123, 255, 0.3);
+}
+.control-btn:not(.active):hover {
+    background-color: rgba(128, 128, 128, 0.1);
+}
+
+@keyframes fade-in { from { opacity: 0; } to { opacity: 1; } }
+@keyframes slide-up { from { transform: translateY(50px); opacity: 0; } to { transform: translateY(0); opacity: 1; } }
+
+.element-title { padding: 20px 25px; border-bottom: 1px solid var(--border-color); }
+.element-title h3 { margin: 0; font-size: 2em; color: var(--text-color); }
+.element-title span { font-size: 1em; color: var(--text-light); font-weight: 500; }
+.tabs { display: flex; border-bottom: 1px solid var(--border-color); padding: 0 25px; }
+.tab-link { background: none; border: none; padding: 14px 18px; cursor: pointer; font-size: 0.9em; font-weight: 600; color: var(--text-light); position: relative; transition: color 0.2s; outline: none; border-bottom: 3px solid transparent; }
+.tab-link:hover { color: var(--text-color); }
+.tab-link.active { color: var(--accent-color); border-bottom-color: var(--accent-color); }
+
+.tab-content {
+    padding: 20px 25px;
+    overflow-y: auto;
+    flex-grow: 1;
+    color: var(--text-color);
+    max-height: 350px; /* Ensures scrollability */
+}
+
+.tab-content p strong { color: var(--text-color); font-weight: 600; }
+
+.property-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 15px;
+}
+
+.property-grid p {
+    background-color: var(--card-bg);
+    padding: 10px;
+    border-radius: 8px;
+    margin: 0;
+    border-left: 3px solid var(--accent-color);
+}
+
+/* Responsive Modal & Table */
+@media (max-width: 900px) { 
+    .modal-body { flex-direction: column; height: auto; max-height: 90vh; } 
+    .modal-left { min-height: 350px; } 
+    .modal-content { width: 95%; margin: 5% auto; } 
+}
+@media (max-width: 768px) {
+    #periodic-table-container { overflow-x: auto; padding-bottom: 15px; }
+    #periodic-table-main, #periodic-table-f-block {
+        width: 1200px; /* Force grid to its ideal width for scrolling */
+    }
+}
